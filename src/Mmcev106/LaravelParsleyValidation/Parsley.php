@@ -59,6 +59,17 @@ class Parsley{
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
 					$attributes['maxlength'] = $value;
 				}
+				else if($name == 'min'){
+					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
+					$attributes['minlength'] = $value;
+				}
+				else if($name == 'not_in'){
+					$value = str_replace(',', '|', $value);
+					$attributes['pattern'] = "/^(?!(one|two|three)$)/";
+				}
+				else if($name == 'numeric'){
+					$attributes['data-parsley-type'] = "number";
+				}
 			}
 
 			if(self::isElementNumeric($attributes)){
@@ -80,7 +91,7 @@ class Parsley{
 	}
 
 	private static function isElementNumeric($attributes){
-		return @$attributes['type'] == 'number';
+		return @$attributes['type'] == 'number' || @$attributes['data-parsley-type'] == 'number';
 	}
 
 	private static function switchStringValidatorsToNumberValidators(&$attributes){

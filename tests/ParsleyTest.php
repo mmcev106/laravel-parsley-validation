@@ -8,18 +8,48 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
     	$validator = Validator::make(
     		array(),
     		array(
-			    'max_string_test_field' => 'max:6',
-			    'max_integer_test_field' => 'integer|max:3' 
+			    'max_string_test_field' => 'max:1',
+			    'max_integer_test_field' => 'integer|max:2',
+			    'max_numeric_test_field' => 'numeric|max:3'
 			)
 		);
 
 		$this->assertValidBuildJSOutput($validator, array(
 			'max_string_test_field' => array(
-				'maxlength' => '6'
+				'maxlength' => '1'
 			),
 			'max_integer_test_field' => array(
 				'type' => 'number',
+				'max' => '2'
+			),
+			'max_numeric_test_field' => array(
+				'data-parsley-type' => 'number',
 				'max' => '3'
+			)
+		));
+	}
+
+	public function test_min(){
+    	$validator = Validator::make(
+    		array(),
+    		array(
+			    'min_string_test_field' => 'min:1',
+			    'min_integer_test_field' => 'integer|min:2',
+			    'min_numeric_test_field' => 'numeric|min:3'
+			)
+		);
+
+		$this->assertValidBuildJSOutput($validator, array(
+			'min_string_test_field' => array(
+				'minlength' => '1'
+			),
+			'min_integer_test_field' => array(
+				'type' => 'number',
+				'min' => '2'
+			),
+			'min_numeric_test_field' => array(
+				'data-parsley-type' => 'number',
+				'min' => '3'
 			)
 		));
 	}
@@ -49,6 +79,9 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    'in_test_field' => 'in:one,two,three',
 			    'integer_test_field' => 'integer',
 			    // 'ip_test_field' => 'ip',
+			    // 'mimes_test_field' => 'mimes:jpeg,bmp,png'
+			    'not_in_test_field' => 'not_in:one,two,three',
+			    'numeric_test_field' => 'numeric'
 			),
     		array(
 				'message_test_field.test_validator_name' => 'Test message!'
@@ -90,6 +123,12 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			),
 			'integer_test_field' => array(
 				'type' => 'number',
+			),
+			'not_in_test_field' => array(
+				'pattern' => '/^(?!(one|two|three)$)/',
+			),
+			'numeric_test_field' => array(
+				'data-parsley-type' => 'number',
 			),
 			'message_test_field' => array(
 				'data-parsley-test_validator_name-message' => 'Test message!'
