@@ -1,2 +1,2 @@
 # laravel-parsley-validation
-Automatically generate Parsley validation rules from Laravel validation rules.
+Automatically generate Parsley attributes from Laravel validation rules, and apply them.

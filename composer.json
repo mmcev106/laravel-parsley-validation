@@ -1,0 +1,20 @@
+{
+    "name": "mmcev106/laravel-parsley-validation",
+    "description": "Automatically generate Parsley attributes from Laravel validation rules, and apply them.",
+    "keywords": ["laravel", "parsley", "validation"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark McEver",
+            "email": "mark@fastmail.net"
+        }
+    ],
+    "require": {
+        "illuminate/validation": ">=4.1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mmcev106\\LaravelParsleyValidation\\": "src/"
+        }
+    }
+}
