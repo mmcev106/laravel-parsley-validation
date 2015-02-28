@@ -4,7 +4,27 @@ use Mmcev106\LaravelParsleyValidation\Parsley;
 
 class ParsleyTest extends PHPUnit_Framework_TestCase {
 
-	public function testBuildJS()
+	public function test_max(){
+    	$validator = Validator::make(
+    		array(),
+    		array(
+			    'max_string_test_field' => 'max:6',
+			    'max_integer_test_field' => 'integer|max:3' 
+			)
+		);
+
+		$this->assertValidBuildJSOutput($validator, array(
+			'max_string_test_field' => array(
+				'maxlength' => '6'
+			),
+			'max_integer_test_field' => array(
+				'type' => 'number',
+				'max' => '3'
+			)
+		));
+	}
+
+	public function test_everything_else()
 	{
     	$validator = Validator::make(
     		array(),

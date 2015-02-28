@@ -55,6 +55,16 @@ class Parsley{
 				else if($name == 'integer'){
 					$attributes['type'] = "number";
 				}
+				else if($name == 'max'){
+					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
+					$attributes['maxlength'] = $value;
+				}
+			}
+
+			if(self::isElementNumeric($attributes)){
+				// Laravel assumes fields are strings by default, so we create string related Parsley rules by default.
+				// If a rule is exists for a given field specifying it as numeric in Laravel, we must change the string related validators in Parsley to their number related equivalents.
+				self::switchStringValidatorsToNumberValidators($attributes);
 			}
 		}
 
@@ -67,6 +77,29 @@ class Parsley{
 		}
 
 		return self::buildJSForAttributes($formSelector, $formSelector, $attributesByElementName);
+	}
+
+	private static function isElementNumeric($attributes){
+		return @$attributes['type'] == 'number';
+	}
+
+	private static function switchStringValidatorsToNumberValidators(&$attributes){
+		if(isset($attributes['maxlength'])){
+			$attributes['max'] = $attributes['maxlength'];
+			unset($attributes['maxlength']);
+		}
+
+		if(isset($attributes['minlength'])){
+			$attributes['min'] = $attributes['minlength'];
+			unset($attributes['minlength']);
+		}
+
+		if(isset($attributes['size'])){
+			$size = $attributes['size'];
+			// TODO - This incorrectly assumes that size is intended to validate strings only (Laravel's Validator supports other types as well).
+			$attributes['data-parsley-length'] = "[$size, $size]";
+			unset($attributes['size']);
+		}
 	}
 
 	private static function buildJSForAttributes($formSelector, $formSelector, $attributesByElementName){
