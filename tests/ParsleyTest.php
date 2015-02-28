@@ -4,6 +4,31 @@ use Mmcev106\LaravelParsleyValidation\Parsley;
 
 class ParsleyTest extends PHPUnit_Framework_TestCase {
 
+	public function test_between(){
+		$validator = Validator::make(
+    		array(),
+    		array(
+			    'between_string_test_field' => 'between:1,2',
+			    'between_integer_test_field' => 'integer|between:3,4',
+			    'between_numeric_test_field' => 'numeric|between:5,6'
+			)
+		);
+
+		$this->assertValidBuildJSOutput($validator, array(
+			'between_string_test_field' => array(
+				'data-parsley-length' => '[1,2]'
+			),
+			'between_integer_test_field' => array(
+				'type' => 'number',
+				'data-parsley-range' => '[3,4]'
+			),
+			'between_numeric_test_field' => array(
+				'data-parsley-type' => 'number',
+				'data-parsley-range' => '[5,6]'
+			)
+		));
+	}
+
 	public function test_max(){
     	$validator = Validator::make(
     		array(),
@@ -54,6 +79,31 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
+	public function test_size(){
+    	$validator = Validator::make(
+    		array(),
+    		array(
+			    'size_string_test_field' => 'size:1',
+			    'size_integer_test_field' => 'integer|size:2',
+			    'size_numeric_test_field' => 'numeric|size:3'
+			)
+		);
+
+		$this->assertValidBuildJSOutput($validator, array(
+			'size_string_test_field' => array(
+				'data-parsley-length' => '[1,1]'
+			),
+			'size_integer_test_field' => array(
+				'type' => 'number',
+				'data-parsley-range' => '[2,2]'
+			),
+			'size_numeric_test_field' => array(
+				'data-parsley-type' => 'number',
+				'data-parsley-range' => '[3,3]'
+			)
+		));
+	}
+
 	public function test_everything_else()
 	{
     	$validator = Validator::make(
@@ -67,7 +117,6 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    'alpha_num_test_field' => 'alpha_num',
 			    // 'array_test_field' => 'array',
 			    // 'before_test_field' => 'before:01/01/2001',
-			    'between_test_field' => 'between:1,2',
 			    // 'confirmed_test_field' => 'confirmed',
 			    // 'date_test_field' => 'date',
 			    // 'date_format_test_field' => 'date_format:MM/DD/YYYY',
@@ -81,7 +130,17 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    // 'ip_test_field' => 'ip',
 			    // 'mimes_test_field' => 'mimes:jpeg,bmp,png'
 			    'not_in_test_field' => 'not_in:one,two,three',
-			    'numeric_test_field' => 'numeric'
+			    'numeric_test_field' => 'numeric',
+			    'regex_test_field' => 'regex:/^[A-Za-z]+$/',
+			    'required_test_field' => 'required',
+			    // 'required_if_test_field' => 'required_if',
+			    // 'required_with_test_field' => 'required_with',
+			    // 'required_with_all_test_field' => 'required_with_all',
+			    // 'required_without_test_field' => 'required_without',
+			    // 'required_without_all_test_field' => 'required_without_all',
+			    // 'same_test_field' => 'same:another_test_field',
+			    // 'unique_test_field' => 'unique:table,column,except,idColumn'
+			    'url_test_field' => 'url'
 			),
     		array(
 				'message_test_field.test_validator_name' => 'Test message!'
@@ -103,9 +162,6 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			),
 			'alpha_num_test_field' => array(
 				'data-parsley-type' => 'alphanum'
-			),
-			'between_test_field' => array(
-				'data-parsley-length' => '[1,2]'
 			),
 			'digits_test_field' => array(
 				'data-parsley-type' => 'digits',
@@ -129,6 +185,15 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			),
 			'numeric_test_field' => array(
 				'data-parsley-type' => 'number',
+			),
+			'regex_test_field' => array(
+				'pattern' => '/^[A-Za-z]+$/',
+			),
+			'required_test_field' => array(
+				'required' => '',
+			),
+			'url_test_field' => array(
+				'type' => 'url',
 			),
 			'message_test_field' => array(
 				'data-parsley-test_validator_name-message' => 'Test message!'

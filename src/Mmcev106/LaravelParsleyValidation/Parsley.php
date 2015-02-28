@@ -35,6 +35,7 @@ class Parsley{
 					$attributes['data-parsley-type'] = 'alphanum';
 				}
 				else if($name == 'between'){
+					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
 					$attributes['data-parsley-length'] = "[$value]";
 				}
 				else if($name == 'digits'){
@@ -70,6 +71,19 @@ class Parsley{
 				else if($name == 'numeric'){
 					$attributes['data-parsley-type'] = "number";
 				}
+				else if($name == 'regex'){
+					$attributes['pattern'] = $value;
+				}
+				else if($name == 'required'){
+					$attributes['required'] = '';
+				}
+				else if($name == 'size'){
+					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
+					$attributes['data-parsley-length'] = "[$value,$value]";
+				}
+				else if($name == 'url'){
+					$attributes['type'] = 'url';
+				}
 			}
 
 			if(self::isElementNumeric($attributes)){
@@ -95,6 +109,11 @@ class Parsley{
 	}
 
 	private static function switchStringValidatorsToNumberValidators(&$attributes){
+		if(isset($attributes['data-parsley-length'])){
+			$attributes['data-parsley-range'] = $attributes['data-parsley-length'];
+			unset($attributes['data-parsley-length']);
+		}
+
 		if(isset($attributes['maxlength'])){
 			$attributes['max'] = $attributes['maxlength'];
 			unset($attributes['maxlength']);
@@ -103,13 +122,6 @@ class Parsley{
 		if(isset($attributes['minlength'])){
 			$attributes['min'] = $attributes['minlength'];
 			unset($attributes['minlength']);
-		}
-
-		if(isset($attributes['size'])){
-			$size = $attributes['size'];
-			// TODO - This incorrectly assumes that size is intended to validate strings only (Laravel's Validator supports other types as well).
-			$attributes['data-parsley-length'] = "[$size, $size]";
-			unset($attributes['size']);
 		}
 	}
 
