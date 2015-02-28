@@ -41,6 +41,20 @@ class Parsley{
 					$attributes['data-parsley-type'] = "digits";
 					$attributes['data-parsley-length'] = "[$value,$value]";
 				}
+				else if($name == 'digits_between'){
+					$attributes['data-parsley-type'] = "digits";
+					$attributes['data-parsley-length'] = "[$value]";
+				}
+				else if($name == 'email'){
+					$attributes['type'] = "email";
+				}
+				else if($name == 'in'){
+					$value = str_replace(',', '|', $value);
+					$attributes['pattern'] = "/^($value)$/";
+				}
+				else if($name == 'integer'){
+					$attributes['type'] = "number";
+				}
 			}
 		}
 

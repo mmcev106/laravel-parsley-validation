@@ -23,9 +23,15 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    // 'date_format_test_field' => 'date_format:MM/DD/YYYY',
 			    // 'different_test_field' => 'different:another_test_field',
 			    'digits_test_field' => 'digits:3',
+			    'digits_between_test_field' => 'digits_between:2,7',
+			    'email_test_field' => 'email',
+			    // 'image_test_field' => 'image',
+			    'in_test_field' => 'in:one,two,three',
+			    'integer_test_field' => 'integer',
+			    // 'ip_test_field' => 'ip',
 			),
     		array(
-				'message_test_field.required' => 'Test message!'
+				'message_test_field.test_validator_name' => 'Test message!'
 			)
 		);
 
@@ -51,9 +57,22 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			'digits_test_field' => array(
 				'data-parsley-type' => 'digits',
 				'data-parsley-length' => '[3,3]'
-			),			
+			),
+			'digits_between_test_field' => array(
+				'data-parsley-type' => 'digits',
+				'data-parsley-length' => '[2,7]'
+			),
+			'email_test_field' => array(
+				'type' => 'email',
+			),
+			'in_test_field' => array(
+				'pattern' => '/^(one|two|three)$/',
+			),
+			'integer_test_field' => array(
+				'type' => 'number',
+			),
 			'message_test_field' => array(
-				'data-parsley-required-message' => 'Test message!'
+				'data-parsley-test_validator_name-message' => 'Test message!'
 			)
 		));
 	}
