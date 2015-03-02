@@ -143,60 +143,88 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    'url_test_field' => 'url'
 			),
     		array(
-				'message_test_field.test_validator_name' => 'Test message!'
+				'accepted_test_field.accepted' => 'accepted_test_field message!',
+				'active_url_test_field.active_url' => 'active_url_test_field message!',
+				'alpha_test_field.alpha' => 'alpha_test_field message!',
+				'alpha_dash_test_field.alpha_dash' => 'alpha_dash_test_field message!',
+				'alpha_num_test_field.alpha_num' => 'alpha_num_test_field message!',
+				'digits_test_field.digits' => 'digits_test_field message!',
+				'digits_between_test_field.digits_between' => 'digits_between_test_field message!',
+				'email_test_field.email' => 'email_test_field message!',
+				'in_test_field.in' => 'in_test_field message!',
+				'integer_test_field.integer' => 'integer_test_field message!',
+				'not_in_test_field.not_in' => 'not_in_test_field message!',
+				'numeric_test_field.numeric' => 'numeric_test_field message!',
+				'regex_test_field.regex' => 'regex_test_field message!',
+				'required_test_field.required' => 'required_test_field message!',
+				'url_test_field.url' => 'url_test_field message!'
 			)
 		);
 
 		$this->assertValidBuildJSOutput($validator, array(
 			'accepted_test_field' => array(
-				'pattern' => '/^(yes|on|1)$/'
+				'pattern' => '/^(yes|on|1)$/',
+				'data-parsley-pattern-message' => 'accepted_test_field message!'
 			),
 			'active_url_test_field' => array(
-				'data-parsley-type' => 'url'
+				'data-parsley-type' => 'url',
+				'data-parsley-type-message' => 'active_url_test_field message!'
 			),
 			'alpha_test_field' => array(
-				'pattern' => '/^[A-z]?$/'
+				'pattern' => '/^[A-z]?$/',
+				'data-parsley-pattern-message' => 'alpha_test_field message!'
 			),
 			'alpha_dash_test_field' => array(
-				'pattern' => '/^[A-z-_]?$/'
+				'pattern' => '/^[A-z-_]?$/',
+				'data-parsley-pattern-message' => 'alpha_dash_test_field message!'
 			),
 			'alpha_num_test_field' => array(
-				'data-parsley-type' => 'alphanum'
+				'data-parsley-type' => 'alphanum',
+				'data-parsley-type-message' => 'alpha_num_test_field message!'
 			),
 			'digits_test_field' => array(
 				'data-parsley-type' => 'digits',
-				'data-parsley-length' => '[3,3]'
+				'data-parsley-type-message' => 'digits_test_field message!',
+				'data-parsley-length' => '[3,3]',
+				'data-parsley-length-message' => 'digits_test_field message!'
 			),
 			'digits_between_test_field' => array(
 				'data-parsley-type' => 'digits',
-				'data-parsley-length' => '[2,7]'
+				'data-parsley-type-message' => 'digits_between_test_field message!',
+				'data-parsley-length' => '[2,7]',
+				'data-parsley-length-message' => 'digits_between_test_field message!'
 			),
 			'email_test_field' => array(
 				'type' => 'email',
+				'data-parsley-type-message' => 'email_test_field message!'
 			),
 			'in_test_field' => array(
 				'pattern' => '/^(one|two|three)$/',
+				'data-parsley-pattern-message' => 'in_test_field message!'
 			),
 			'integer_test_field' => array(
 				'type' => 'number',
+				'data-parsley-type-message' => 'integer_test_field message!'
 			),
 			'not_in_test_field' => array(
 				'pattern' => '/^(?!(one|two|three)$)/',
+				'data-parsley-pattern-message' => 'not_in_test_field message!'
 			),
 			'numeric_test_field' => array(
 				'data-parsley-type' => 'number',
+				'data-parsley-type-message' => 'numeric_test_field message!'
 			),
 			'regex_test_field' => array(
 				'pattern' => '/^[A-Za-z]+$/',
+				'data-parsley-pattern-message' => 'regex_test_field message!'
 			),
 			'required_test_field' => array(
 				'required' => '',
+				'data-parsley-required-message' => 'required_test_field message!'
 			),
 			'url_test_field' => array(
 				'type' => 'url',
-			),
-			'message_test_field' => array(
-				'data-parsley-test_validator_name-message' => 'Test message!'
+				'data-parsley-type-message' => 'url_test_field message!'
 			)
 		));
 	}

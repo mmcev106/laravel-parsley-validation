@@ -19,70 +19,72 @@ class Parsley{
 				$name = $parts[0];
 				$value = @$parts[1]; // Only some rules have a value.
 
+				$message = @$validator->getCustomMessages()["$elementName.$name"];
+
 				if($name == 'accepted'){
-					$attributes['pattern'] = '/^(yes|on|1)$/';
+					self::addAttribute($attributes, $validator, $message, 'pattern', '/^(yes|on|1)$/');
 				}
 				else if($name == 'active_url'){
-					$attributes['data-parsley-type'] = 'url';
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-type', 'url');
 				}
 				else if($name == 'alpha'){
-					$attributes['pattern'] = '/^[A-z]?$/';
+					self::addAttribute($attributes, $validator, $message, 'pattern', '/^[A-z]?$/');
 				}
 				else if($name == 'alpha_dash'){
-					$attributes['pattern'] = '/^[A-z-_]?$/';
+					self::addAttribute($attributes, $validator, $message, 'pattern', '/^[A-z-_]?$/');
 				}
 				else if($name == 'alpha_num'){
-					$attributes['data-parsley-type'] = 'alphanum';
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-type', 'alphanum');
 				}
 				else if($name == 'between'){
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
-					$attributes['data-parsley-length'] = "[$value]";
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-length', "[$value]");
 				}
 				else if($name == 'digits'){
-					$attributes['data-parsley-type'] = "digits";
-					$attributes['data-parsley-length'] = "[$value,$value]";
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-type', 'digits');
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-length', "[$value,$value]");
 				}
 				else if($name == 'digits_between'){
-					$attributes['data-parsley-type'] = "digits";
-					$attributes['data-parsley-length'] = "[$value]";
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-type', 'digits');
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-length', "[$value]");
 				}
 				else if($name == 'email'){
-					$attributes['type'] = "email";
+					self::addAttribute($attributes, $validator, $message, 'type', 'email');
 				}
 				else if($name == 'in'){
 					$value = str_replace(',', '|', $value);
-					$attributes['pattern'] = "/^($value)$/";
+					self::addAttribute($attributes, $validator, $message, 'pattern', "/^($value)$/");
 				}
 				else if($name == 'integer'){
-					$attributes['type'] = "number";
+					self::addAttribute($attributes, $validator, $message, 'type', 'number');
 				}
 				else if($name == 'max'){
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
-					$attributes['maxlength'] = $value;
+					self::addAttribute($attributes, $validator, $message, 'maxlength', $value);
 				}
 				else if($name == 'min'){
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
-					$attributes['minlength'] = $value;
+					self::addAttribute($attributes, $validator, $message, 'minlength', $value);
 				}
 				else if($name == 'not_in'){
 					$value = str_replace(',', '|', $value);
-					$attributes['pattern'] = "/^(?!(one|two|three)$)/";
+					self::addAttribute($attributes, $validator, $message, 'pattern', '/^(?!(one|two|three)$)/');
 				}
 				else if($name == 'numeric'){
-					$attributes['data-parsley-type'] = "number";
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-type', 'number');
 				}
 				else if($name == 'regex'){
-					$attributes['pattern'] = $value;
+					self::addAttribute($attributes, $validator, $message, 'pattern', $value);
 				}
 				else if($name == 'required'){
-					$attributes['required'] = '';
+					self::addAttribute($attributes, $validator, $message, 'required', '');
 				}
 				else if($name == 'size'){
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
-					$attributes['data-parsley-length'] = "[$value,$value]";
+					self::addAttribute($attributes, $validator, $message, 'data-parsley-length', "[$value,$value]");
 				}
 				else if($name == 'url'){
-					$attributes['type'] = 'url';
+					self::addAttribute($attributes, $validator, $message, 'type', 'url');
 				}
 			}
 
@@ -93,15 +95,22 @@ class Parsley{
 			}
 		}
 
-		foreach($validator->getCustomMessages() as $key=>$message){
-			$parts = explode('.', $key);
-			$elementName = $parts[0];
-			$attributeName = $parts[1];
-
-			$attributesByElementName[$elementName]["data-parsley-$attributeName-message"] = $message;
-		}
-
 		return self::buildJSForAttributes($formSelector, $formSelector, $attributesByElementName);
+	}
+
+	private static function addAttribute(&$attributes, $validator, $message, $name, $value){
+		$attributes[$name] = $value;
+
+		if($message){
+			$errorAttributeName = $name;
+
+			$prefix = 'data-parsley-';
+			if(strpos($errorAttributeName, $prefix) === 0){
+				$errorAttributeName = substr($errorAttributeName, strlen($prefix));
+			}
+
+			$attributes["data-parsley-$errorAttributeName-message"] = $message;
+		}
 	}
 
 	private static function isElementNumeric($attributes){
