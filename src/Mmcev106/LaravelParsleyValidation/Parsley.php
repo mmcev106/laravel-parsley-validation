@@ -99,6 +99,12 @@ class Parsley{
 	}
 
 	private static function addAttribute(&$attributes, $validator, $message, $name, $value){
+
+		if($name == 'pattern'){
+			// Escape backslashes so they'll end up in the final javascript regex.
+			$value = str_replace('\\', '\\\\', $value);
+		}
+
 		$attributes[$name] = $value;
 
 		if($message){

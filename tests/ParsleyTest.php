@@ -131,7 +131,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    // 'mimes_test_field' => 'mimes:jpeg,bmp,png'
 			    'not_in_test_field' => 'not_in:one,two,three',
 			    'numeric_test_field' => 'numeric',
-			    'regex_test_field' => 'regex:/^[A-Za-z]+$/',
+			    'regex_test_field' => 'regex:/ensure backslashes escape parenthesis in javascript \\(\\)/',
 			    'required_test_field' => 'required',
 			    // 'required_if_test_field' => 'required_if',
 			    // 'required_with_test_field' => 'required_with',
@@ -215,7 +215,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'data-parsley-type-message' => 'numeric_test_field message!'
 			),
 			'regex_test_field' => array(
-				'pattern' => '/^[A-Za-z]+$/',
+				'pattern' => '/ensure backslashes escape parenthesis in javascript \\\\(\\\\)/',
 				'data-parsley-pattern-message' => 'regex_test_field message!'
 			),
 			'required_test_field' => array(
