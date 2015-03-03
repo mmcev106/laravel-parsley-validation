@@ -19,7 +19,8 @@ class Parsley{
 				$name = $parts[0];
 				$value = @$parts[1]; // Only some rules have a value.
 
-				$message = @$validator->getCustomMessages()["$elementName.$name"];
+				$customMessages = $validator->getCustomMessages();
+				$message = @$customMessages["$elementName.$name"];
 
 				if($name == 'accepted'){
 					self::addAttribute($attributes, $validator, $message, 'pattern', '/^(yes|on|1)$/');
