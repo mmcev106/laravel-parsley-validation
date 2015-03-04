@@ -3,7 +3,7 @@
 namespace Mmcev106\LaravelParsleyValidation;
 
 class Parsley{
-	static function buildJS($formSelector, $validator){
+	static function buildJS($validator, $formSelector='form'){
 
 		$attributesByElementName = array();
 

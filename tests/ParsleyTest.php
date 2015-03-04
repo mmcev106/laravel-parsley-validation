@@ -4,7 +4,7 @@ use Mmcev106\LaravelParsleyValidation\Parsley;
 
 class ParsleyTest extends PHPUnit_Framework_TestCase {
 
-	public function test_between(){
+	public function test_between_rule(){
 		$validator = Validator::make(
     		array(),
     		array(
@@ -29,7 +29,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
-	public function test_max(){
+	public function test_max_rule(){
     	$validator = Validator::make(
     		array(),
     		array(
@@ -54,7 +54,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
-	public function test_min(){
+	public function test_min_rule(){
     	$validator = Validator::make(
     		array(),
     		array(
@@ -79,7 +79,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
-	public function test_size(){
+	public function test_size_rule(){
     	$validator = Validator::make(
     		array(),
     		array(
@@ -104,7 +104,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
-	public function test_everything_else()
+	public function test_all_other_rules()
 	{
     	$validator = Validator::make(
     		array(),
@@ -229,10 +229,31 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
+	function test_default_form_selector(){
+		$validator = Validator::make(
+    		array(),
+    		array(
+			    'test_field' => 'required',
+			)
+		);
+
+		$this->assertValidBuildJSOutput($validator, array(
+			'test_field' => array(
+				'required' => ''
+			),
+		), '#someCustomFormId');
+	}
+
 	// Asserts that the output of buildJS() returns valid javascript, and all the expected jQuery calls.
-	private function assertValidBuildJSOutput($validator, $expectedAttributesByElementName){
-		$formSelector = '#myForm';
-		$js = Parsley::buildJS($formSelector, $validator);
+	private function assertValidBuildJSOutput($validator, $expectedAttributesByElementName, $formSelector=NULL){
+		if($formSelector){
+			$js = Parsley::buildJS($validator, $formSelector);
+		}
+		else{
+			$js = Parsley::buildJS($validator);
+			$formSelector = 'form';  // This is what the default formSelector should end up as.
+		}
+
 		$lines = explode(PHP_EOL, $js);
 		$lineNumber = 0;
 
