@@ -244,6 +244,28 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		), '#someCustomFormId');
 	}
 
+	function test_conflicting_rules(){
+		$validator = Validator::make(
+    		array(),
+    		array(
+    			// The 'accepted' and 'regex' rules both generate a 'pattern' attribute in Parsley.
+    			// This logically doesn't make sense, and should throw an exception (as opposed to one quietly overriding the other).
+			    'test_field' => 'accepted|regex:/123/',
+			)
+		);
+
+		$exception = NULL;
+		try{
+			$this->assertValidBuildJSOutput($validator, NULL);
+		}
+		catch(Exception $e){
+			$exception = $e;
+		}
+
+		// Assert that an exception is thrown whenever one rule conflicts with another.
+		$this->assertEquals("The 'regex' rule on the 'test_field' field conflicts with a previous rule!", $exception->getMessage());
+	}
+
 	// Asserts that the output of buildJS() returns valid javascript, and all the expected jQuery calls.
 	private function assertValidBuildJSOutput($validator, $expectedAttributesByElementName, $formSelector=NULL){
 		if($formSelector){
