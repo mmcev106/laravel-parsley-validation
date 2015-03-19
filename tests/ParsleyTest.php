@@ -138,7 +138,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			    // 'required_with_all_test_field' => 'required_with_all',
 			    // 'required_without_test_field' => 'required_without',
 			    // 'required_without_all_test_field' => 'required_without_all',
-			    // 'same_test_field' => 'same:another_test_field',
+			    'same_test_field' => 'same:another_test_field',
 			    // 'unique_test_field' => 'unique:table,column,except,idColumn'
 			    'url_test_field' => 'url'
 			),
@@ -158,6 +158,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'numeric_test_field.numeric' => 'numeric_test_field message!',
 				'regex_test_field.regex' => 'regex_test_field message!',
 				'required_test_field.required' => 'required_test_field message!',
+				'same_test_field.same' => 'same_test_field message!',
 				'url_test_field.url' => 'url_test_field message!'
 			)
 		);
@@ -184,7 +185,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'data-parsley-type-message' => 'alpha_num_test_field message!'
 			),
 			'confirmed_test_field' => array(
-				'data-parsley-equalto' => '#confirmed_test_field_confirmation',
+				'data-parsley-equalto' => 'input[name=confirmed_test_field_confirmation]',
 				'data-parsley-equalto-message' => 'confirmed_test_field message!',
 			),
 			'digits_test_field' => array(
@@ -226,6 +227,10 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 			'required_test_field' => array(
 				'required' => '',
 				'data-parsley-required-message' => 'required_test_field message!'
+			),
+			'same_test_field' => array(
+				'data-parsley-equalto' => 'input[name=another_test_field]',
+				'data-parsley-equalto-message' => 'same_test_field message!'
 			),
 			'url_test_field' => array(
 				'type' => 'url',

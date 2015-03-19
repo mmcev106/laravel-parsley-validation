@@ -42,7 +42,7 @@ class Parsley{
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-length', "[$value]");
 				}
 				else if($name == 'confirmed'){
-					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-equalto', '#' . $elementName . '_confirmation');
+					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-equalto', "input[name=" . $elementName . "_confirmation]");
 				}
 				else if($name == 'digits'){
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-type', 'digits');
@@ -86,6 +86,9 @@ class Parsley{
 				else if($name == 'size'){
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-length', "[$value,$value]");
+				}
+				else if($name == 'same'){
+					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-equalto', "input[name=$value]");
 				}
 				else if($name == 'url'){
 					$this->addAttribute($attributes, $elementName, $name, 'type', 'url');
