@@ -148,7 +148,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'alpha_test_field.alpha' => 'alpha_test_field message!',
 				'alpha_dash_test_field.alpha_dash' => 'alpha_dash_test_field message!',
 				'alpha_num_test_field.alpha_num' => 'alpha_num_test_field message!',
-				'confirmed_test_field.confirmed' => 'confirmed_test_field message!',
+				'confirmed_test_field_confirmation.confirmed' => 'confirmed_test_field message!',
 				'digits_test_field.digits' => 'digits_test_field message!',
 				'digits_between_test_field.digits_between' => 'digits_between_test_field message!',
 				'email_test_field.email' => 'email_test_field message!',
@@ -184,8 +184,8 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'data-parsley-type' => 'alphanum',
 				'data-parsley-type-message' => 'alpha_num_test_field message!'
 			),
-			'confirmed_test_field' => array(
-				'data-parsley-equalto' => 'input[name=confirmed_test_field_confirmation]',
+			'confirmed_test_field_confirmation' => array(
+				'data-parsley-equalto' => 'input[name=confirmed_test_field]',
 				'data-parsley-equalto-message' => 'confirmed_test_field message!',
 			),
 			'digits_test_field' => array(

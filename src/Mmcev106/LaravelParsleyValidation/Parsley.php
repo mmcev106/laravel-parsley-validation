@@ -39,7 +39,7 @@ class Parsley{
 					$this->addAttribute($elementName, $name, 'data-parsley-length', "[$value]");
 				}
 				else if($name == 'confirmed'){
-					$this->addAttribute($elementName, $name, 'data-parsley-equalto', "input[name=" . $elementName . "_confirmation]");
+					$this->addAttribute($elementName . '_confirmation', $name, 'data-parsley-equalto', "input[name=$elementName]");
 				}
 				else if($name == 'digits'){
 					$this->addAttribute($elementName, $name, 'data-parsley-type', 'digits');
