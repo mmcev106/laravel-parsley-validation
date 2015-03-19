@@ -41,6 +41,9 @@ class Parsley{
 					// Assume we're working with a string by default.  We'll change this later if this field is determined to be numeric.
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-length', "[$value]");
 				}
+				else if($name == 'confirmed'){
+					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-equalto', '#' . $elementName . '_confirmation');
+				}
 				else if($name == 'digits'){
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-type', 'digits');
 					$this->addAttribute($attributes, $elementName, $name, 'data-parsley-length', "[$value,$value]");
