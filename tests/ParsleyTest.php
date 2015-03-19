@@ -185,6 +185,8 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 				'data-parsley-type-message' => 'alpha_num_test_field message!'
 			),
 			'confirmed_test_field_confirmation' => array(
+				'required' => '',
+				'data-parsley-required-message' => 'confirmed_test_field message!',
 				'data-parsley-equalto' => 'input[name=confirmed_test_field]',
 				'data-parsley-equalto-message' => 'confirmed_test_field message!',
 			),

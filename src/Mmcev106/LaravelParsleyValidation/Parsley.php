@@ -39,7 +39,10 @@ class Parsley{
 					$this->addAttribute($elementName, $name, 'data-parsley-length', "[$value]");
 				}
 				else if($name == 'confirmed'){
-					$this->addAttribute($elementName . '_confirmation', $name, 'data-parsley-equalto', "input[name=$elementName]");
+					$selector = "input[name=$elementName]";
+					$elementName = $elementName . '_confirmation';
+					$this->addAttribute($elementName, $name, 'required', ''); // Require the field so that the equalto validation occurs even if the field is blank.
+					$this->addAttribute($elementName, $name, 'data-parsley-equalto', $selector);
 				}
 				else if($name == 'digits'){
 					$this->addAttribute($elementName, $name, 'data-parsley-type', 'digits');
