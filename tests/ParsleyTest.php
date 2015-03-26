@@ -285,7 +285,7 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		}
 		else{
 			$js = Parsley::buildJS($validator);
-			$formSelector = 'form';  // This is what the default formSelector should end up as.
+			$formSelector = 'form:first';  // This is what the default formSelector should end up as.
 		}
 
 		$lines = explode(PHP_EOL, $js);

@@ -103,7 +103,7 @@ class Parsley{
 		}
 	}
 
-	static function buildJS($validator, $formSelector='form'){
+	static function buildJS($validator, $formSelector='form:first'){
 		$parsley = new Parsley($validator, $formSelector);
 		return $parsley->buildJSForAttributes($formSelector, $formSelector);
 	}
