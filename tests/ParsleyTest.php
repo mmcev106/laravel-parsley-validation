@@ -278,6 +278,10 @@ class ParsleyTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("The 'regex' rule on the 'test_field' field conflicts with a previous rule!", $exception->getMessage());
 	}
 
+	function test_no_validator_specified(){
+		$this->assertValidBuildJSOutput(NULL, array());
+	}
+
 	// Asserts that the output of buildJS() returns valid javascript, and all the expected jQuery calls.
 	private function assertValidBuildJSOutput($validator, $expectedAttributesByElementName, $formSelector=NULL){
 		if($formSelector){

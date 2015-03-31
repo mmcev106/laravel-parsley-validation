@@ -5,11 +5,19 @@ namespace Mmcev106\LaravelParsleyValidation;
 class Parsley{
 
 	private function __construct($validator, $formSelector){
-		$this->validator = $validator;
+		if($validator == NULL){
+			$this->customMessages = NULL;
+			$rules = array();
+		}
+		else{
+			$this->customMessages = $validator->getCustomMessages();
+			$rules = $validator->getRules();
+		}
+
 		$this->formSelector = $formSelector;
 		$this->attributesByElementName = array();
 
-		foreach($validator->getRules() as $elementName=>$rules){
+		foreach($rules as $elementName=>$rules){
 			if(!isset($this->attributesByElementName[$elementName])){
 				$this->attributesByElementName[$elementName] = array();
 			}
@@ -122,8 +130,7 @@ class Parsley{
 
 		$attributes[$attributeName] = $attributeValue;
 
-		$customMessages = $this->validator->getCustomMessages();
-		$message = @$customMessages["$elementName.$ruleName"];
+		$message = @$this->customMessages["$elementName.$ruleName"];
 		if($message){
 			$errorAttributeName = $attributeName;
 
